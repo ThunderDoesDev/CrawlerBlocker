@@ -82,9 +82,7 @@ This project is licensed under the MIT License - see the LICENSE file in the roo
 
 ## Note
 
-These scripts use `iptables` to block traffic from the specified IP addresses. They modify the system's firewall rules, so please ensure you have the appropriate permissions and understand the impact of these changes on your network security.
-- **Web Crawlers**: Implementing these `iptables` rules will block traffic from most known web crawlers and bots that originate from the listed IP addresses and subnets.
-- **Backend Security**: By blocking these IPs, your backend services will be hidden from these sources, enhancing the security of your server infrastructure.
+These scripts leverage `iptables` to block incoming traffic from the specified IP addresses and subnets, which are known sources of many web crawlers and bots. By enforcing these rules, not only is traffic from these entities prevented, but your backend services will also be shielded from potential threats, significantly enhancing your server infrastructure's security. Please ensure you have the appropriate permissions to modify your system's firewall rules and fully understand the implications of these changes on your network's security.
 
 ## Support
 
