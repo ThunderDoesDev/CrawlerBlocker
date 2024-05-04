@@ -78,7 +78,7 @@ sudo node crawler_blocker.js
 
 ## License
 
-This source code is available for educational purposes only under a strict non-commercial, non-distribution license. All rights are reserved.
+These scripts are available for educational purposes only under a strict non-commercial, non-distribution license. All rights are reserved.
 
 Feel free to learn from and experiment with the code, but please respect the terms of use.
 
