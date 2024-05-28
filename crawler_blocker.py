@@ -1,15 +1,30 @@
 import subprocess
 
-def block_ip(ip_address):
+def block_ip(ip_address, is_ipv6=False):
+    if is_ipv6:
+        commands = [
+            f"ip6tables -A INPUT -s {ip_address} -j DROP",
+            f"ip6tables -A FORWARD -s {ip_address} -j DROP"
+        ]
+    else:
+        commands = [
+            f"iptables -A INPUT -s {ip_address} -j DROP",
+            f"iptables -A FORWARD -s {ip_address} -j DROP"
+        ]
+    for cmd in commands:
+        subprocess.run(cmd, shell=True)
+
+def block_user_agent():
     commands = [
-        f"iptables -A INPUT -s {ip_address} -j DROP",
-        f"iptables -A FORWARD -s {ip_address} -j DROP"
+        "iptables -A INPUT -p tcp --dport 80 -m string --string 'Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)' --algo bm -j DROP",
+        "iptables -A INPUT -p tcp --dport 443 -m string --string 'Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)' --algo bm -j DROP"
     ]
     for cmd in commands:
         subprocess.run(cmd, shell=True)
 
 def save_iptables():
     subprocess.run("iptables-save > /etc/iptables/rules.v4", shell=True)
+    subprocess.run("ip6tables-save > /etc/iptables/rules.v6", shell=True)
 
 def main():
     ip_addresses = [
@@ -30,7 +45,12 @@ def main():
         "199.45.154.0/24", "199.45.155.0/24", "206.168.34.0/24"
     ]
     for ip in ip_addresses:
-        block_ip(ip)
+        if ':' in ip:
+            block_ip(ip, is_ipv6=True)
+        else:
+            block_ip(ip)
+    
+    block_user_agent()
     save_iptables()
 
 if __name__ == "__main__":
