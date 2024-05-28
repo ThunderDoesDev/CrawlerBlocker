@@ -1,4 +1,5 @@
 const { execSync } = require('child_process');
+const fs = require('fs');
 
 const ipAddresses = [
     "9.248.172.16", "66.240.192.138", "66.240.205.34", "66.240.219.146",
@@ -21,11 +22,9 @@ const ipAddresses = [
 function blockIP(ip) {
     try {
         if (ip.includes(':')) {
-            // IPv6 address
             execSync(`ip6tables -A INPUT -s ${ip} -j DROP`);
             execSync(`ip6tables -A FORWARD -s ${ip} -j DROP`);
         } else {
-            // IPv4 address
             execSync(`iptables -A INPUT -s ${ip} -j DROP`);
             execSync(`iptables -A FORWARD -s ${ip} -j DROP`);
         }
@@ -52,10 +51,41 @@ function saveIptables() {
     }
 }
 
+function setupNftables() {
+    try {
+        const nftablesConfig = `#!/usr/sbin/nft -f
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0; policy accept;
+        ip6 saddr 2602:80d:1000:b0cc:e::/80 drop
+        ip6 saddr 2620:96:e000:b0cc:e::/80 drop
+        ip6 saddr 2602:80d:1003::/112 drop
+        ip6 saddr 2602:80d:1004::/112 drop
+    }
+
+    chain forward {
+        type filter hook forward priority 0; policy accept;
+        ip6 saddr 2602:80d:1000:b0cc:e::/80 drop
+        ip6 saddr 2620:96:e000:b0cc:e::/80 drop
+        ip6 saddr 2602:80d:1003::/112 drop
+        ip6 saddr 2602:80d:1004::/112 drop
+    }
+}`;
+
+        fs.writeFileSync('/etc/nftables.conf', nftablesConfig);
+        execSync('nft -f /etc/nftables.conf');
+        execSync('systemctl enable nftables');
+    } catch (error) {
+        console.error('Failed to set up nftables: ', error);
+    }
+}
+
 function main() {
     ipAddresses.forEach(blockIP);
     blockUserAgent();
     saveIptables();
+    setupNftables();
 }
 
 main();
