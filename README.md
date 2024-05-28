@@ -90,7 +90,7 @@ Feel free to learn from and experiment with the code, but please respect the ter
 These scripts leverage `iptables` and `nftables` to block incoming traffic from the specified IP addresses and subnets, which are known sources of many web crawlers and bots. By enforcing these rules, not only is traffic from these entities prevented, but your backend services will also be shielded from potential threats, significantly enhancing your server infrastructure's security. Please ensure you have the appropriate permissions to modify your system's firewall rules and fully understand the implications of these changes on your network's security.
 
 
-### Explanation of Updates
+## Explanation of Updates
 - Added a requirement for `nftables` in the prerequisites section.
 - Included a note to install `nftables` using the package manager.
 - Updated the note to mention the use of both `iptables` and `nftables`.
