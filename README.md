@@ -13,7 +13,7 @@ Before running these scripts, ensure you have the following installed on your sy
   ```bash
   sudo apt-get install nftables
 
-Additionally, you will need `sudo` or root access to modify `iptables` rules.
+Additionally, you will need `sudo` or root access to modify `iptables` and `nftables` rules.
 
 ## Installation
 
