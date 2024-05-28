@@ -46,3 +46,35 @@ iptables -A INPUT -p tcp --dport 443 -m string --string "Mozilla/5.0 (compatible
 # Save the iptables rules to ensure they persist after a reboot
 iptables-save > /etc/iptables/rules.v4
 ip6tables-save > /etc/iptables/rules.v6
+
+# Optional: Flush existing nftables rules
+nft flush ruleset
+
+# Define the nftables rules
+cat << EOF > /etc/nftables.conf
+#!/usr/sbin/nft -f
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0; policy accept;
+        ip6 saddr 2602:80d:1000:b0cc:e::/80 drop
+        ip6 saddr 2620:96:e000:b0cc:e::/80 drop
+        ip6 saddr 2602:80d:1003::/112 drop
+        ip6 saddr 2602:80d:1004::/112 drop
+    }
+
+    chain forward {
+        type filter hook forward priority 0; policy accept;
+        ip6 saddr 2602:80d:1000:b0cc:e::/80 drop
+        ip6 saddr 2620:96:e000:b0cc:e::/80 drop
+        ip6 saddr 2602:80d:1003::/112 drop
+        ip6 saddr 2602:80d:1004::/112 drop
+    }
+}
+EOF
+
+# Apply the nftables rules
+nft -f /etc/nftables.conf
+
+# Enable nftables to start on boot
+systemctl enable nftables
