@@ -5,6 +5,7 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 
 # Optional: Flush existing iptables rules
 iptables -F
+ip6tables -F
 
 # List of IP addresses and subnets to block
 declare -a ips=(
@@ -27,9 +28,21 @@ declare -a ips=(
 
 # Loop through the list and block each IP
 for ip in "${ips[@]}"; do
-    iptables -A INPUT -s $ip -j DROP
-    iptables -A FORWARD -s $ip -j DROP
+    if [[ $ip == *":"* ]]; then
+        # IPv6 address
+        ip6tables -A INPUT -s $ip -j DROP
+        ip6tables -A FORWARD -s $ip -j DROP
+    else
+        # IPv4 address
+        iptables -A INPUT -s $ip -j DROP
+        iptables -A FORWARD -s $ip -j DROP
+    fi
 done
+
+# Block HTTP requests with a specific User-Agent
+iptables -A INPUT -p tcp --dport 80 -m string --string "Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)" --algo bm -j DROP
+iptables -A INPUT -p tcp --dport 443 -m string --string "Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)" --algo bm -j DROP
 
 # Save the iptables rules to ensure they persist after a reboot
 iptables-save > /etc/iptables/rules.v4
+ip6tables-save > /etc/iptables/rules.v6
