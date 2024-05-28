@@ -20,16 +20,33 @@ const ipAddresses = [
 
 function blockIP(ip) {
     try {
-        execSync(`iptables -A INPUT -s ${ip} -j DROP`);
-        execSync(`iptables -A FORWARD -s ${ip} -j DROP`);
+        if (ip.includes(':')) {
+            // IPv6 address
+            execSync(`ip6tables -A INPUT -s ${ip} -j DROP`);
+            execSync(`ip6tables -A FORWARD -s ${ip} -j DROP`);
+        } else {
+            // IPv4 address
+            execSync(`iptables -A INPUT -s ${ip} -j DROP`);
+            execSync(`iptables -A FORWARD -s ${ip} -j DROP`);
+        }
     } catch (error) {
         console.error(`Failed to block IP ${ip}: ${error}`);
+    }
+}
+
+function blockUserAgent() {
+    try {
+        execSync("iptables -A INPUT -p tcp --dport 80 -m string --string 'Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)' --algo bm -j DROP");
+        execSync("iptables -A INPUT -p tcp --dport 443 -m string --string 'Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)' --algo bm -j DROP");
+    } catch (error) {
+        console.error(`Failed to block User-Agent: ${error}`);
     }
 }
 
 function saveIptables() {
     try {
         execSync('iptables-save > /etc/iptables/rules.v4');
+        execSync('ip6tables-save > /etc/iptables/rules.v6');
     } catch (error) {
         console.error('Failed to save iptables rules: ', error);
     }
@@ -37,7 +54,9 @@ function saveIptables() {
 
 function main() {
     ipAddresses.forEach(blockIP);
+    blockUserAgent();
     saveIptables();
 }
 
 main();
+
