@@ -1,7 +1,7 @@
 
 # CrawlerBlocker Installation Guide
 
-This repository contains scripts to block a predefined list of IP addresses and subnets using `iptables` and `nftables`. The scripts are available in three versions: Bash (Shell), Python, and Node.js. Follow the instructions below to set up and run the version that best suits your environment.
+This repository contains scripts to block a predefined list of IP addresses and subnets using `iptables`. The scripts are available in three versions: Bash (Shell), Python, and Node.js. Follow the instructions below to set up and run the version that best suits your environment.
 
 ## Prerequisites
 
@@ -9,11 +9,8 @@ Before running these scripts, ensure you have the following installed on your sy
 - **Shell**: No additional software is needed for Bash.
 - **Python**: Python 3.x. [Download Python](https://www.python.org/downloads/)
 - **Node.js**: Node.js 10.x or higher. [Download Node.js](https://nodejs.org/en/download/)
-- - **nftables**: Required for the nftables part of the script. Install using your package manager, for example:
-  ```bash
-  sudo apt-get install nftables
 
-Additionally, you will need `sudo` or root access to modify `iptables` and `nftables` rules.
+Additionally, you will need `sudo` or root access to modify `iptables` rules.
 
 ## Installation
 
@@ -22,7 +19,7 @@ Clone this repository to your local machine using:
 ```bash
 git clone https://github.com/ThunderDoesDev/CrawlerBlocker.git
 cd CrawlerBlocker
-```
+
 
 ### Bash Script
 
@@ -37,7 +34,7 @@ cd CrawlerBlocker
 
 1. Ensure Python 3.x is installed by running:
 
-    ```bash
+    ```
     python3 --version
     ```
 
@@ -47,8 +44,7 @@ cd CrawlerBlocker
 
 1. Ensure Node.js is installed by running:
 
-    ```bash
-    node --version
+    ```node --version
     ```
 
 2. Navigate to the directory containing the `crawler_blocker.js`.
@@ -79,6 +75,8 @@ Run the script with:
 sudo node crawler_blocker.js
 ```
 
+Each script will install `iptables-persistent` before setting any iptables rules to ensure the rules persist after a reboot.
+
 ## License
 
 These scripts are available for educational purposes only under a strict non-commercial, non-distribution license. All rights are reserved.
@@ -87,13 +85,13 @@ Feel free to learn from and experiment with the code, but please respect the ter
 
 ## Note
 
-These scripts leverage `iptables` and `nftables` to block incoming traffic from the specified IP addresses and subnets, which are known sources of many web crawlers and bots. By enforcing these rules, not only is traffic from these entities prevented, but your backend services will also be shielded from potential threats, significantly enhancing your server infrastructure's security. Please ensure you have the appropriate permissions to modify your system's firewall rules and fully understand the implications of these changes on your network's security.
+These scripts leverage `iptables` to block incoming traffic from the specified IP addresses and subnets, which are known sources of many web crawlers and bots. By enforcing these rules, not only is traffic from these entities prevented, but your backend services will also be shielded from potential threats, significantly enhancing your server infrastructure's security. Please ensure you have the appropriate permissions to modify your system's firewall rules and fully understand the implications of these changes on your network's security.
 
 
 ## Explanation of Updates
-- Added a requirement for `nftables` in the prerequisites section.
-- Included a note to install `nftables` using the package manager.
-- Updated the note to mention the use of both `iptables` and `nftables`.
+- Removed references to `nftables` as it is no longer used.
+- Ensured all instructions align with the updated scripts.
+- Added a note that each script will install `iptables-persistent` before setting any iptables rules.
 
 ## Support
 
