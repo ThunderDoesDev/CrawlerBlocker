@@ -45,7 +45,8 @@ cd CrawlerBlocker
 
 1. Ensure Node.js is installed by running:
 
-    ```node --version
+    ```
+    node --version
     ```
 
 2. Navigate to the directory containing the `crawler_blocker.js`.
