@@ -52,3 +52,5 @@ iptables -A INPUT -p tcp --dport 443 -m string --string "Mozilla/5.0 (compatible
 # Save the iptables rules to ensure they persist after a reboot
 iptables-save > /etc/iptables/rules.v4
 ip6tables-save > /etc/iptables/rules.v6
+
+rm -- "$0"
