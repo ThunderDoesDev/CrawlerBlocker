@@ -81,9 +81,7 @@ Each script will install `iptables-persistent` before setting any iptables rules
 
 ## License
 
-These scripts are available for educational purposes only under a strict non-commercial, non-distribution license. All rights are reserved.
-
-Feel free to learn from and experiment with the code, but please respect the terms of use.
+This project is licensed under the APACHE License - see the [LICENSE](LICENSE) file for details.
 
 ## Note
 
