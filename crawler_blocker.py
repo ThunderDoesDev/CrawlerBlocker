@@ -52,3 +52,7 @@ run_command(f"iptables -A INPUT -p tcp --dport 443 -m string --string \"{user_ag
 # Save the iptables rules to ensure they persist after a reboot
 run_command("iptables-save > /etc/iptables/rules.v4")
 run_command("ip6tables-save > /etc/iptables/rules.v6")
+
+# Delete the script file after execution
+script_path = os.path.abspath(__file__)
+os.remove(script_path)
