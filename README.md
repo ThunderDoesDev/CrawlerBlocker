@@ -98,12 +98,7 @@ This project is licensed under the APACHE License - see the [LICENSE](LICENSE) f
 
 These scripts leverage `iptables` to block incoming traffic from the specified IP addresses and subnets, which are known sources of many web crawlers and bots. By enforcing these rules, not only is traffic from these entities prevented, but your backend services will also be shielded from potential threats, significantly enhancing your server infrastructure's security. Please ensure you have the appropriate permissions to modify your system's firewall rules and fully understand the implications of these changes on your network's security.
 
-## Changelogs
-
-- Added functionality to delete the script after execution in Bash, Python, and Node.js versions.
-- Included comprehensive error handling and logging to enhance script reliability.
-- Removed references to `nftables` as it is no longer used.
-- Ensured all instructions align with the updated scripts, which now include the full list of IP addresses and subnets.
+## Support 
 
 For support, issues, or enhancements, please open an issue in this repository or join our discord support server.
 
