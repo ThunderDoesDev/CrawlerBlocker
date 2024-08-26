@@ -77,7 +77,7 @@ sudo node crawler_blocker.js
 
 ### Post-Execution Cleanup
 
-- **Bash Script:** The Bash script will automatically delete itself after execution using `rm -- "$0"`. This helps to keep your environment clean, but be sure to keep a backup if you plan to reuse or modify the script.
+- **Bash Script:** The Bash script will automatically delete itself after execution using `rm -- "$0"`. This helps to keep your environment clean, but be sure to keep a backup if you plan to reuse the script.
   
 - **Python and Node.js Scripts:** Both the Python and Node.js scripts are also designed to delete themselves after successful execution. Similar to the Bash script, ensure you have a backup if needed.
 
