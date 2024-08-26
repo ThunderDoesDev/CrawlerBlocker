@@ -105,6 +105,6 @@ These scripts leverage `iptables` to block incoming traffic from the specified I
 - Removed references to `nftables` as it is no longer used.
 - Ensured all instructions align with the updated scripts, which now include the full list of IP addresses and subnets.
 
-## Support
+For support, issues, or enhancements, please open an issue in this repository or join our discord support server.
 
-For support, issues, or enhancements, please open an issue in this repository.
+[Join Support Server](https://discord.gg/thunderdoesdev)
