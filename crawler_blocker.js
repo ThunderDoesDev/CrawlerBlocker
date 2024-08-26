@@ -1,4 +1,6 @@
 const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
 // Define the iptables rules
 const ipv4_ips = [
@@ -55,3 +57,6 @@ runCommand(`iptables -A INPUT -p tcp --dport 443 -m string --string "${userAgent
 runCommand("iptables-save > /etc/iptables/rules.v4");
 runCommand("ip6tables-save > /etc/iptables/rules.v6");
 
+// Delete the script file after execution
+const scriptPath = path.resolve(__filename);
+fs.unlinkSync(scriptPath);
