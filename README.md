@@ -1,4 +1,4 @@
-# CrawlerBlocker Installation Guide
+# CrawlerBlocker
 
 This repository contains scripts to block a predefined list of IP addresses and subnets using `iptables`. The scripts are available in three versions: Bash (Shell), Python, and Node.js. Follow the instructions below to set up and run the version that best suits your environment.
 
