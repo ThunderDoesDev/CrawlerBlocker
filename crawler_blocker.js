@@ -13,7 +13,8 @@ const log = (message) => {
 
 const runCommand = (command) => {
     try {
-        execSync(command, { stdio: 'inherit' });
+        // Use a shell so that redirection operators work correctly
+        execSync(command, { stdio: 'inherit', shell: '/bin/sh' });
         log(`Successfully ran command: ${command}`);
     } catch (error) {
         log(`Command failed: ${command} - ${error.message}`);
